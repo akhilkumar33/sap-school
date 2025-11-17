@@ -1,0 +1,152 @@
+{
+  "_version": "1.76.0",
+  "sap.app": {
+    "id": "sms",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": { "version": "0.0.1" },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:lrop",
+      "version": "1.19.5",
+      "toolsId": "492b56da-5050-4992-98ef-08817eec9717"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/odata/v4/school/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.0"
+        }
+      }
+    }
+  },
+  "sap.ui": { "technology": "UI5", "deviceTypes": { "desktop": true, "tablet": true, "phone": true } },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": { "minUI5Version": "1.142.0", "libs": { "sap.m": {}, "sap.ui.core": {}, "sap.fe.templates": {} } },
+    "models": {
+      "i18n": { "type": "sap.ui.model.resource.ResourceModel", "settings": { "bundleName": "sms.i18n.i18n" } },
+      "": { "dataSource": "mainService", "preload": true, "settings": { "operationMode": "Server", "autoExpandSelect": true, "earlyRequests": true } }
+    },
+    "routing": {
+      "config": {},
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "DepartmentList",
+          "target": "DepartmentList"
+        },
+        {
+          "pattern": "Department({key}):?query:",
+          "name": "DepartmentObjectPage",
+          "target": "DepartmentObjectPage"
+        },
+        {
+          "pattern": "Department({key})/Teachers({key2}):?query:",
+          "name": "TeachersObjectPage",
+          "target": "TeachersObjectPage"
+        },
+        {
+          "pattern": "Teachers({key})/Students({key2}):?query:",
+          "name": "StudentsObjectPage",
+          "target": "StudentsObjectPage"
+        },
+        {
+          "pattern": "Students({key2})/studentDetails({key3})",
+          "name": "StudentDetailsObjectPage",
+          "target": "StudentDetailsObjectPage"
+        }
+      ],
+      "targets": {
+        "DepartmentList": {
+          "type": "Component",
+          "id": "DepartmentList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "initialLoad": true,
+              "contextPath": "/Department",
+              "variantManagement": "Page",
+              "navigation": { "Department": { "detail": { "route": "DepartmentObjectPage" } } },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "actions": {
+                    "sync": { "press": "sms.custom.CustomAction.sort", "text": "Sort", "enabled": true, "visible": true },
+                    "add": { "press": "sms.custom.CustomAction.add", "text": "Add", "enabled": true, "visible": true }
+
+                  }
+                }
+              }
+            }
+          }
+        },
+        "DepartmentObjectPage": {
+          "type": "Component",
+          "id": "DepartmentObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/Department",
+              "navigation": { "Teachers": { "detail": { "route": "TeachersObjectPage" } } }
+            }
+          }
+        },
+        "TeachersObjectPage": {
+          "type": "Component",
+          "id": "TeachersObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+               "controlConfiguration": {
+                "Students/@com.sap.vocabularies.UI.v1.LineItem": {
+                  "actions": {
+                    "sync": { "press": "sms.custom.CustomAction.sort", "text": "Sort", "enabled": true, "visible": true },
+                    "add": { "press": "sms.custom.CustomAction.add", "text": "Add", "enabled": true, "visible": true }
+                  }
+                }
+              },
+              "editableHeaderContent": false,
+              "contextPath": "/Teachers",
+              "navigation": { "Students": { "detail": { "route": "StudentsObjectPage" } } }
+            }
+          }
+        },
+        "StudentsObjectPage": {
+  "type": "Component",
+  "id": "StudentsObjectPage",
+  "name": "sap.fe.templates.ObjectPage",
+  "options": {
+    "settings": {
+      "editableHeaderContent": false,
+      "contextPath": "/Students",
+      "navigation": {
+        "studentDetails": {
+          "detail": {
+            "route": "StudentDetailsObjectPage"
+          }
+        }
+      }
+    }
+  }
+},
+"StudentDetailsObjectPage": {
+  "type": "Component",
+  "id": "StudentDetailsObjectPage",
+  "name": "sap.fe.templates.ObjectPage",
+  "options": {
+    "settings": {
+      "editableHeaderContent": false,
+      "contextPath": "/StudentDetails"
+    }
+  }
+}
+
+      }
+    }
+  }
+}
