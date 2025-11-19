@@ -141,8 +141,7 @@ annotate service.StudentDetails with @(
             { $Type : 'UI.DataField', Label : 'Contact Number',  Value : contactNumber },
             { $Type : 'UI.DataField', Label : 'Date of Birth',   Value : dateOfBirth },
             { $Type : 'UI.DataField', Label : 'Address',         Value : address },
-            { $Type : 'UI.DataField', Label : 'Student Name',    Value : student.Name },
-            { $Type : 'UI.DataField', Label : 'Teacher Name',    Value : student.teacher.Name }
+            { $Type : 'UI.DataField', Label : 'Student Name',    Value : student.Name }
 
         ]
     }
