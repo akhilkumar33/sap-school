@@ -49,14 +49,13 @@ entity Students : cuid {
   Name           : String;
   grade          : Integer;
   teacher        : Association to Teachers;
-  studentDetails : Association to many StudentDetails on studentDetails.student = $self;
+  studentDetails : Association to  StudentDetails on studentDetails.student = $self;
 }
 
 entity StudentDetails : cuid {
   student       : Association to Students;
-  teacher : Association to  Teachers;
   dateOfBirth   : Date;
   contactNumber : String;
   parentName    : String;
-  Address       : String;
+  address       : String;
 }

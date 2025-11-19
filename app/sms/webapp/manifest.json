@@ -51,15 +51,11 @@
           "target": "TeachersObjectPage"
         },
         {
-          "pattern": "Teachers({key})/Students({key2}):?query:",
+          "pattern": "Department({key})/Teachers({key1})/Students({key2}):?query:",
           "name": "StudentsObjectPage",
           "target": "StudentsObjectPage"
-        },
-        {
-          "pattern": "Students({key2})/studentDetails({key3})",
-          "name": "StudentDetailsObjectPage",
-          "target": "StudentDetailsObjectPage"
         }
+      
       ],
       "targets": {
         "DepartmentList": {
@@ -90,6 +86,17 @@
           "name": "sap.fe.templates.ObjectPage",
           "options": {
             "settings": {
+              "controlConfiguration": {
+                "Students/@com.sap.vocabularies.UI.v1.LineItem": {
+                  "actions": {
+                    "std": { "press": "sms.custom.CustomAction.sort", "text": "Sort Student", "enabled": true, "visible": true },
+                    "avc": { "press": "sms.custom.CustomAction.add", "text": "Edit Student", "enabled": true, "visible": true },
+                    "stde": { "press": "sms.custom.CustomAction.sort", "text": "Delete Student", "enabled": true, "visible": true }
+
+                  }
+                }
+              },
+
               "editableHeaderContent": false,
               "contextPath": "/Department",
               "navigation": { "Teachers": { "detail": { "route": "TeachersObjectPage" } } }
@@ -97,54 +104,56 @@
           }
         },
         "TeachersObjectPage": {
-          "type": "Component",
-          "id": "TeachersObjectPage",
-          "name": "sap.fe.templates.ObjectPage",
-          "options": {
-            "settings": {
-               "controlConfiguration": {
-                "Students/@com.sap.vocabularies.UI.v1.LineItem": {
-                  "actions": {
-                    "sync": { "press": "sms.custom.CustomAction.sort", "text": "Sort", "enabled": true, "visible": true },
-                    "add": { "press": "sms.custom.CustomAction.add", "text": "Add", "enabled": true, "visible": true }
-                  }
-                }
-              },
-              "editableHeaderContent": false,
-              "contextPath": "/Teachers",
-              "navigation": { "Students": { "detail": { "route": "StudentsObjectPage" } } }
+  "type": "Component",
+  "id": "TeachersObjectPage",
+  "name": "sap.fe.templates.ObjectPage",
+  "options": {
+    "settings": {
+      "controlConfiguration": {
+        "Students/@com.sap.vocabularies.UI.v1.LineItem": {
+          "actions": {
+            "SortStudents": { 
+              "press": "sms.custom.CustomAction.sortStudents", 
+              "text": "Sort", 
+              "enabled": true, 
+              "visible": true 
+            },
+            "editStudent": { 
+              "press": "sms.custom.CustomAction.editStudentDetails", 
+              "text": "Edit Student", 
+              "enabled": true, 
+              "visible": true 
+            },
+            "deleteStudent": { 
+              "press": "sms.custom.CustomAction.deleteStudent", 
+              "text": "Delete Student", 
+              "enabled": "{= ${ui>/isEditable} === false}",
+              "visible": true,
+              "requiresSelection": true
             }
           }
-        },
+        }
+      },
+      "editableHeaderContent": false,
+      "contextPath": "/Department/Teachers",
+      "navigation": { "Students": { "detail": { "route": "StudentsObjectPage" } } }
+    }
+  }
+},
         "StudentsObjectPage": {
   "type": "Component",
   "id": "StudentsObjectPage",
   "name": "sap.fe.templates.ObjectPage",
   "options": {
     "settings": {
+      
       "editableHeaderContent": false,
-      "contextPath": "/Students",
-      "navigation": {
-        "studentDetails": {
-          "detail": {
-            "route": "StudentDetailsObjectPage"
-          }
-        }
-      }
-    }
-  }
-},
-"StudentDetailsObjectPage": {
-  "type": "Component",
-  "id": "StudentDetailsObjectPage",
-  "name": "sap.fe.templates.ObjectPage",
-  "options": {
-    "settings": {
-      "editableHeaderContent": false,
-      "contextPath": "/StudentDetails"
+      "contextPath": "/Department/Teachers/Students"
+      
     }
   }
 }
+
 
       }
     }

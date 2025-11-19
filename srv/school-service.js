@@ -11,7 +11,7 @@ module.exports = cds.service.impl(async function () {
     if (!name) {
       req.error(400, "Project ID is required");
     } else {
-        return { message: `Department '${name}' created successfully!` };
+        return { message: `Department '${name}' created successfullyyyyy!` };
     }
   });
 });

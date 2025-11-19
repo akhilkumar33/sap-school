@@ -5,5 +5,7 @@ service SchoolService {
     entity Teachers as projection on my.Teachers;
     entity Students as projection on my.Students;
     entity StudentDetails as projection on my.StudentDetails;
+    
+    action CreateDepartment (name : String,location : String) returns String ;
+    
 }
-action CreateDepartment (name : String,location : String);
